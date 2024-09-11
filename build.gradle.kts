@@ -10,7 +10,7 @@ plugins {
 
 val meepMeepVersion = "1.0-SNAPSHOT"
 
-group = "com.noahbres.meepmeep"
+group = "dev.furthestdrop.meepmeep"
 version = "1.0-SNAPSHOT"
 
 val pomUrl = "https://github.com/DragonDev07/MeepMeep"
@@ -59,7 +59,7 @@ val sourcesJar by tasks.creating(Jar::class) {
 publishing {
     publications {
         create<MavenPublication>("meepmeep") {
-            groupId = "com.noahbres.meepmeep"
+            groupId = "dev.furthestdrop.meepmeep"
             artifactId = "meepmeep"
             version = meepMeepVersion
 
