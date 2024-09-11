@@ -9,19 +9,19 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TankVelocityConstraint
 import com.noahbres.meepmeep.trajectorysequence.TrajectorySequenceBuilder
 
 class DriveShim(
-    driveTrainType: DriveTrainType,
-    private val constraints: Constraints,
+    driveTrainType: com.noahbres.meepmeep.DriveTrainType,
+    private val constraints: com.noahbres.meepmeep.Constraints,
     var poseEstimate: Pose2d
 ) {
     private val velConstraint = when (driveTrainType) {
-        DriveTrainType.MECANUM -> MinVelocityConstraint(
+        com.noahbres.meepmeep.DriveTrainType.MECANUM -> MinVelocityConstraint(
             listOf(
                 AngularVelocityConstraint(constraints.maxAngVel),
                 MecanumVelocityConstraint(constraints.maxVel, constraints.trackWidth)
             )
         )
 
-        DriveTrainType.TANK -> MinVelocityConstraint(
+        com.noahbres.meepmeep.DriveTrainType.TANK -> MinVelocityConstraint(
             listOf(
                 AngularVelocityConstraint(constraints.maxAngVel),
                 TankVelocityConstraint(constraints.maxVel, constraints.trackWidth)
@@ -31,8 +31,8 @@ class DriveShim(
 
     private val accelConstraint = ProfileAccelerationConstraint(constraints.maxAccel)
 
-    fun trajectorySequenceBuilder(startPose: Pose2d): TrajectorySequenceBuilder {
-        return TrajectorySequenceBuilder(
+    fun trajectorySequenceBuilder(startPose: Pose2d): com.noahbres.meepmeep.trajectorysequence.TrajectorySequenceBuilder {
+        return com.noahbres.meepmeep.trajectorysequence.TrajectorySequenceBuilder(
             startPose,
             velConstraint,
             accelConstraint,

@@ -18,6 +18,7 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.util.Angle;
+import com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment;
 import com.noahbres.meepmeep.trajectorysequence.sequencesegment.SequenceSegment;
 import com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment;
 import com.noahbres.meepmeep.trajectorysequence.sequencesegment.TurnSegment;
@@ -26,6 +27,8 @@ import com.noahbres.meepmeep.trajectorysequence.sequencesegment.WaitSegment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment;
 
 public class TrajectorySequenceBuilder {
     private final double resolution = 0.25;

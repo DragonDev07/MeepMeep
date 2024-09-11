@@ -16,7 +16,7 @@ import kotlin.math.min
 
 class RoadRunnerBotEntity(
     meepMeep: MeepMeep,
-    private var constraints: Constraints,
+    private var constraints: com.noahbres.meepmeep.Constraints,
 
     width: Double, height: Double,
     pose: Pose2d,
@@ -24,7 +24,7 @@ class RoadRunnerBotEntity(
     val colorScheme: com.noahbres.meepmeep.colorscheme.ColorScheme,
     opacity: Double,
 
-    private var driveTrainType: DriveTrainType = DriveTrainType.MECANUM,
+    private var driveTrainType: com.noahbres.meepmeep.DriveTrainType = com.noahbres.meepmeep.DriveTrainType.MECANUM,
 
     var listenToSwitchThemeRequest: Boolean = false
 ) : BotEntity(meepMeep, width, height, pose, colorScheme, opacity), EntityEventListener {
@@ -36,9 +36,9 @@ class RoadRunnerBotEntity(
 
     override var zIndex: Int = 0
 
-    var drive = DriveShim(driveTrainType, constraints, pose)
+    var drive = com.noahbres.meepmeep.DriveShim(driveTrainType, constraints, pose)
 
-    var currentTrajectorySequence: TrajectorySequence? = null
+    var currentTrajectorySequence: com.noahbres.meepmeep.trajectorysequence.TrajectorySequence? = null
 
     private var trajectorySequenceEntity: TrajectorySequenceEntity? = null
 
@@ -67,7 +67,7 @@ class RoadRunnerBotEntity(
 
         when {
             trajectorySequenceElapsedTime <= currentTrajectorySequence!!.duration() -> {
-                var segment: SequenceSegment? = null
+                var segment: com.noahbres.meepmeep.trajectorysequence.sequencesegment.SequenceSegment? = null
                 var segmentOffsetTime = 0.0
 
                 var currentTime = 0.0
@@ -86,9 +86,9 @@ class RoadRunnerBotEntity(
                 }
 
                 pose = when (segment) {
-                    is WaitSegment -> segment.startPose
-                    is TurnSegment -> segment.startPose.copy(heading = segment.motionProfile[segmentOffsetTime].x)
-                    is TrajectorySegment -> segment.trajectory[segmentOffsetTime]
+                    is com.noahbres.meepmeep.trajectorysequence.sequencesegment.WaitSegment -> segment.startPose
+                    is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TurnSegment -> segment.startPose.copy(heading = segment.motionProfile[segmentOffsetTime].x)
+                    is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment -> segment.trajectory[segmentOffsetTime]
                     else -> currentTrajectorySequence!!.end()
                 }
 
@@ -142,22 +142,22 @@ class RoadRunnerBotEntity(
             trajectorySequenceElapsedTime = min(seconds, currentTrajectorySequence!!.duration())
     }
 
-    fun followTrajectorySequence(sequence: TrajectorySequence) {
+    fun followTrajectorySequence(sequence: com.noahbres.meepmeep.trajectorysequence.TrajectorySequence) {
         currentTrajectorySequence = sequence
 
         trajectorySequenceEntity = TrajectorySequenceEntity(meepMeep, sequence, colorScheme)
     }
 
-    fun setConstraints(constraints: Constraints) {
+    fun setConstraints(constraints: com.noahbres.meepmeep.Constraints) {
         this.constraints = constraints
 
-        drive = DriveShim(driveTrainType, constraints, pose)
+        drive = com.noahbres.meepmeep.DriveShim(driveTrainType, constraints, pose)
     }
 
-    fun setDriveTrainType(driveTrainType: DriveTrainType) {
+    fun setDriveTrainType(driveTrainType: com.noahbres.meepmeep.DriveTrainType) {
         this.driveTrainType = driveTrainType
 
-        drive = DriveShim(driveTrainType, constraints, pose)
+        drive = com.noahbres.meepmeep.DriveShim(driveTrainType, constraints, pose)
     }
 
     override fun switchScheme(scheme: com.noahbres.meepmeep.colorscheme.ColorScheme) {

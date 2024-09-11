@@ -2,11 +2,10 @@ package com.noahbres.meepmeep
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.noahbres.meepmeep.entity.RoadRunnerBotEntity
-import com.noahbres.meepmeep.trajectorysequence.TrajectorySequence
 
-class DefaultBotBuilder(private val meepMeep: MeepMeep) {
+class DefaultBotBuilder(private val meepMeep: com.noahbres.meepmeep.MeepMeep) {
 
-    private var constraints = Constraints(
+    private var constraints = com.noahbres.meepmeep.Constraints(
         30.0, 30.0, Math.toRadians(60.0), Math.toRadians(60.0), 15.0
     )
 
@@ -17,22 +16,22 @@ class DefaultBotBuilder(private val meepMeep: MeepMeep) {
     private var colorScheme: com.noahbres.meepmeep.colorscheme.ColorScheme? = null
     private var opacity = 0.8
 
-    private var driveTrainType = DriveTrainType.MECANUM
+    private var driveTrainType = com.noahbres.meepmeep.DriveTrainType.MECANUM
 
-    fun setDimensions(width: Double, height: Double): DefaultBotBuilder {
+    fun setDimensions(width: Double, height: Double): com.noahbres.meepmeep.DefaultBotBuilder {
         this.width = width
         this.height = height
 
         return this
     }
 
-    fun setStartPose(pose: Pose2d): DefaultBotBuilder {
+    fun setStartPose(pose: Pose2d): com.noahbres.meepmeep.DefaultBotBuilder {
         this.startPose = pose
 
         return this
     }
 
-    fun setConstraints(constraints: Constraints): DefaultBotBuilder {
+    fun setConstraints(constraints: com.noahbres.meepmeep.Constraints): com.noahbres.meepmeep.DefaultBotBuilder {
         this.constraints = constraints
 
         return this
@@ -44,19 +43,25 @@ class DefaultBotBuilder(private val meepMeep: MeepMeep) {
         maxAngVel: Double,
         maxAngAccel: Double,
         trackWidth: Double
-    ): DefaultBotBuilder {
-        constraints = Constraints(maxVel, maxAccel, maxAngVel, maxAngAccel, trackWidth)
+    ): com.noahbres.meepmeep.DefaultBotBuilder {
+        constraints = com.noahbres.meepmeep.Constraints(
+            maxVel,
+            maxAccel,
+            maxAngVel,
+            maxAngAccel,
+            trackWidth
+        )
 
         return this
     }
 
-    fun setDriveTrainType(driveTrainType: DriveTrainType): DefaultBotBuilder {
+    fun setDriveTrainType(driveTrainType: com.noahbres.meepmeep.DriveTrainType): com.noahbres.meepmeep.DefaultBotBuilder {
         this.driveTrainType = driveTrainType
 
         return this
     }
 
-    fun setColorScheme(scheme: com.noahbres.meepmeep.colorscheme.ColorScheme): DefaultBotBuilder {
+    fun setColorScheme(scheme: com.noahbres.meepmeep.colorscheme.ColorScheme): com.noahbres.meepmeep.DefaultBotBuilder {
         this.colorScheme = scheme
 
         return this
@@ -72,14 +77,14 @@ class DefaultBotBuilder(private val meepMeep: MeepMeep) {
         )
     }
 
-    fun followTrajectorySequence(trajectorySequence: TrajectorySequence): RoadRunnerBotEntity {
+    fun followTrajectorySequence(trajectorySequence: com.noahbres.meepmeep.trajectorysequence.TrajectorySequence): RoadRunnerBotEntity {
         val bot = this.build()
         bot.followTrajectorySequence(trajectorySequence)
 
         return bot
     }
 
-    fun followTrajectorySequence(callback: AddTrajectorySequenceCallback): RoadRunnerBotEntity {
+    fun followTrajectorySequence(callback: com.noahbres.meepmeep.AddTrajectorySequenceCallback): RoadRunnerBotEntity {
         return followTrajectorySequence(callback.buildTrajectorySequence(build().drive))
     }
 }

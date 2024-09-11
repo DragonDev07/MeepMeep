@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 
 class TrajectorySequenceEntity(
     override val meepMeep: MeepMeep,
-    private val trajectorySequence: TrajectorySequence,
+    private val trajectorySequence: com.noahbres.meepmeep.trajectorysequence.TrajectorySequence,
     private var colorScheme: com.noahbres.meepmeep.colorscheme.ColorScheme
 ) : ThemedEntity {
     companion object {
@@ -48,8 +48,8 @@ class TrajectorySequenceEntity(
 
     private var currentSegmentImage: BufferedImage? = null
 
-    private var lastSegment: TrajectorySegment? = null
-    private var currentSegment: TrajectorySegment? = null
+    private var lastSegment: com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment? = null
+    private var currentSegment: com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment? = null
 
     var trajectoryProgress: Double? = null
 
@@ -100,7 +100,7 @@ class TrajectorySequenceEntity(
 
         for (i in 0 until trajectorySequence.size()) {
             when (val step = trajectorySequence.get(i)) {
-                is TrajectorySegment -> {
+                is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment -> {
                     val traj = step.trajectory
 
                     val displacementSamples = (traj.path.length() / SAMPLE_RESOLUTION).roundToInt()
@@ -119,7 +119,7 @@ class TrajectorySequenceEntity(
                     currentEndPose = step.trajectory.end()
                 }
 
-                is TurnSegment -> {
+                is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TurnSegment -> {
                     val turnEntity = TurnIndicatorEntity(
                         meepMeep, colorScheme, currentEndPose.vec(), currentEndPose.heading,
                         currentEndPose.heading + step.totalRotation
@@ -128,7 +128,7 @@ class TrajectorySequenceEntity(
                     meepMeep.requestToAddEntity(turnEntity)
                 }
 
-                is WaitSegment -> {
+                is com.noahbres.meepmeep.trajectorysequence.sequencesegment.WaitSegment -> {
                 }
             }
         }
@@ -137,11 +137,11 @@ class TrajectorySequenceEntity(
 
         for (i in 0 until trajectorySequence.size()) {
             val segment = trajectorySequence.get(i)
-            if (segment is WaitSegment || segment is TurnSegment) {
+            if (segment is com.noahbres.meepmeep.trajectorysequence.sequencesegment.WaitSegment || segment is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TurnSegment) {
                 segment.markers.forEach { marker ->
                     val pose = when (segment) {
-                        is WaitSegment -> segment.startPose
-                        is TurnSegment -> segment.startPose.copy(heading = segment.motionProfile[marker.time].x)
+                        is com.noahbres.meepmeep.trajectorysequence.sequencesegment.WaitSegment -> segment.startPose
+                        is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TurnSegment -> segment.startPose.copy(heading = segment.motionProfile[marker.time].x)
                         else -> Pose2d()
                     }
 
@@ -156,7 +156,7 @@ class TrajectorySequenceEntity(
                     markerEntityList.add(markerEntity)
                     meepMeep.requestToAddEntity(markerEntity)
                 }
-            } else if (segment is TrajectorySegment) {
+            } else if (segment is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment) {
                 segment.trajectory.markers.forEach { marker ->
                     val pose = segment.trajectory[marker.time]
 
@@ -261,7 +261,7 @@ class TrajectorySequenceEntity(
                 val seg = trajectorySequence.get(i)
 
                 if (currentTime + seg.duration > trajectoryProgress!!) {
-                    if (seg is TrajectorySegment) currentSegment = seg
+                    if (seg is com.noahbres.meepmeep.trajectorysequence.sequencesegment.TrajectorySegment) currentSegment = seg
 
                     break
                 } else {

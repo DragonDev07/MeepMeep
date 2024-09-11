@@ -13,12 +13,12 @@ val meepMeepVersion = "1.0-SNAPSHOT"
 group = "com.noahbres.meepmeep"
 version = "1.0-SNAPSHOT"
 
-val pomUrl = "https://github.com/NoahBres/MeepMeep"
-val pomScmUrl = "https://github.com/NoahBres/MeepMeep"
-val pomIssueUrl = "https://github.com/NoahBres/MeepMeep/issues"
-val pomDesc = "https://github.com/NoahBres/MeepMeep"
+val pomUrl = "https://github.com/DragonDev07/MeepMeep"
+val pomScmUrl = "https://github.com/DragonDev07/MeepMeep"
+val pomIssueUrl = "https://github.com/DragonDev07/MeepMeep/issues"
+val pomDesc = "https://github.com/DragonDev07/MeepMeep"
 
-val githubRepo = "NoahBres/MeepMeep"
+val githubRepo = "DragonDev07/MeepMeep"
 val githubReadme = "README.md"
 
 repositories {
